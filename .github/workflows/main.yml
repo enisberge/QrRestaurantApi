@@ -24,4 +24,4 @@ jobs:
       run: dotnet build ./QrRestaurantBackEnd.sln --configuration Release
   
     - name: Publish
-      run: dotnet publish ./QrRestaurantBackEnd.sln --configuration Release --no build
+      run: dotnet publish ./QrRestaurantBackEnd.sln --configuration Release --no-build
