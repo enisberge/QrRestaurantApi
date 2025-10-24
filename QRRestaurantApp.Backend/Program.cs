@@ -33,12 +33,17 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseCors(options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "QrRestaurant API v1");
+    c.RoutePrefix = string.Empty; // => ana sayfa olarak açar (opsiyonel)
+});
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

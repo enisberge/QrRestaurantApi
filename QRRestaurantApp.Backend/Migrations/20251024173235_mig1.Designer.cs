@@ -12,7 +12,7 @@ using QRRestaurantApp.Backend.Context;
 namespace QRRestaurantApp.Backend.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20251022120040_mig-1")]
+    [Migration("20251024173235_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
