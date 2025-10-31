@@ -4,6 +4,7 @@ using QRRestaurantApp.Backend.Helpers;
 using QRRestaurantApp.Backend.Services.CategoryServices;
 using QRRestaurantApp.Backend.Services.ProductService;
 using QRRestaurantApp.Backend.Services.PromotionServices;
+using QRRestaurantApp.Backend.Services.UrlServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +16,14 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
+//UrlService kayydý
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUrlService, UrlService>();
 
-
+//Automapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//Swagger ve CORS
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
@@ -39,11 +44,7 @@ app.UseCors(options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod(
 //    app.UseSwaggerUI();
 //}
 app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "QrRestaurant API v1");
-    c.RoutePrefix = string.Empty; // => ana sayfa olarak açar (opsiyonel)
-});
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

@@ -23,6 +23,12 @@ namespace QRRestaurantApp.Backend.Controllers
             return Ok(values);
         }
 
+        [HttpGet("GetPromotionProducts")]
+        public async Task<IActionResult> GetPromotionProducts()
+        {
+            var result=await _promotionService.GetPromotionProductsAsync();
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> CreatePromotion(CreatePromotionDto createPromotionDto)
         {

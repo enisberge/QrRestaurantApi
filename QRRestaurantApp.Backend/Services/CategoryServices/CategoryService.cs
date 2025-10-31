@@ -4,6 +4,7 @@ using QRRestaurantApp.Backend.Context;
 using QRRestaurantApp.Backend.DTOs.CategoryDtos;
 using QRRestaurantApp.Backend.Entities;
 using QRRestaurantApp.Backend.Helpers;
+using QRRestaurantApp.Backend.Services.UrlServices;
 
 namespace QRRestaurantApp.Backend.Services.CategoryServices
 {
@@ -11,10 +12,12 @@ namespace QRRestaurantApp.Backend.Services.CategoryServices
     {
         private readonly SqlContext _context;
         private readonly IMapper _mapper;
-        public CategoryService(SqlContext context, IMapper mapper)
+        private readonly IUrlService _urlService;   
+        public CategoryService(SqlContext context, IMapper mapper,IUrlService urlService)
         {
             _context = context;
             _mapper = mapper;
+            _urlService = urlService;
         }
 
         public async Task<ApiResponse<ResultCategoryDto>> CreateCategoryAsync(CreateCategoryDto createCategoryDto)
@@ -66,9 +69,22 @@ namespace QRRestaurantApp.Backend.Services.CategoryServices
 
         public async Task<ApiResponse<List<ResultCategoryDto>>> GetAllCategoryAsync()
         {
+            var basePath = _urlService.GetCategoryImageUrl();
             var categories = await _context.Categories.Where(c => c.IsActive).ToListAsync();
             var result = _mapper.Map<List<ResultCategoryDto>>(categories);
+
+            foreach (var category in result)
+            {
+                // Eğer ImageUrl boşsa veya null'sa, olduğu gibi bırak
+                if (!string.IsNullOrEmpty(category.ImageUrl))
+                {
+                    category.ImageUrl = $"{basePath}{category.ImageUrl}";
+                }
+
+            }
+
             return ApiResponse<List<ResultCategoryDto>>.SuccessResponse(result);
+      
         }
 
         public async Task<ApiResponse<string>> UpdateCategoryAsync(UpdateCategoryDto updateCategoryDto)
