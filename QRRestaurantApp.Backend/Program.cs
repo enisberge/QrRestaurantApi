@@ -4,6 +4,7 @@ using QRRestaurantApp.Backend.Helpers;
 using QRRestaurantApp.Backend.Services.CategoryServices;
 using QRRestaurantApp.Backend.Services.ProductService;
 using QRRestaurantApp.Backend.Services.PromotionServices;
+using QRRestaurantApp.Backend.Services.TableServices;
 using QRRestaurantApp.Backend.Services.UrlServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,9 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
+builder.Services.AddScoped<ITableService, TableService>();
+
+
 //UrlService kayydý
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUrlService, UrlService>();

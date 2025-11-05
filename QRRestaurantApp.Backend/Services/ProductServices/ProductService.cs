@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QRRestaurantApp.Backend.Context;
-using QRRestaurantApp.Backend.DTOs.CategoryDtos;
 using QRRestaurantApp.Backend.DTOs.ProductDtos;
 using QRRestaurantApp.Backend.Entities;
 using QRRestaurantApp.Backend.Helpers;
+using QRRestaurantApp.Backend.Services.UrlServices;
 
 namespace QRRestaurantApp.Backend.Services.ProductService
 {
@@ -12,11 +12,13 @@ namespace QRRestaurantApp.Backend.Services.ProductService
     {
         private readonly SqlContext _context;
         private readonly IMapper _mapper;
+        private readonly IUrlService _urlService;
 
-        public ProductService(SqlContext context, IMapper mapper)
+        public ProductService(SqlContext context, IMapper mapper, IUrlService urlService)
         {
             _context = context;
             _mapper = mapper;
+            _urlService = urlService;
         }
 
         public async Task<ApiResponse<ResultProductDto>> CreateProductAsync(CreateProductDto createProductDto)
@@ -62,8 +64,18 @@ namespace QRRestaurantApp.Backend.Services.ProductService
 
         public async Task<ApiResponse<List<ResultProductDto>>> GetAllProductAsync()
         {
+            var basePath = _urlService.GetProductImageUrl();
            var products= await _context.Products.Where(p => p.IsActive).ToListAsync();
             var result=_mapper.Map<List<ResultProductDto>>(products);
+
+            foreach (var product in result)
+            {
+                if (!string.IsNullOrEmpty(product.ImageUrl))
+                {
+                    product.ImageUrl = $"{basePath}{product.ImageUrl}";
+                }
+
+            }
             return ApiResponse<List<ResultProductDto>>.SuccessResponse(result);
         }
         

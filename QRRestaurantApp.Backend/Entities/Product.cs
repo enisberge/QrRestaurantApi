@@ -14,5 +14,7 @@
         public DateTime CreatedDate { get; set; }=DateTime.Now;
         public DateTime? UpdatedDate { get; set; }
         public List<Promotion> Promotions { get; set; }
+
+        public List<OrderItem> OrderItems { get; set; }
     }
 }

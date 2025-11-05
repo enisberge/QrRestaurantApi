@@ -10,6 +10,11 @@ namespace QRRestaurantApp.Backend.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product>Products { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
+        public DbSet<Table> Tables { get; set; }
+        public DbSet<TableSession> TableSessions { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +32,29 @@ namespace QRRestaurantApp.Backend.Context
                 .WithMany(p=>p.Promotions)
                 .HasForeignKey(p=>p.ProductId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o=>o.Table)
+                .WithMany(t => t.Orders)
+                .HasForeignKey(o=>o.TableId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi=>oi.Order)
+                .WithMany(o=>o.OrderItems)
+                .HasForeignKey(oi=>oi.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Product)
+                .WithMany(p => p.OrderItems)
+                .HasForeignKey(oi => oi.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // 🔹 Table Code unique olmalı
+            modelBuilder.Entity<Table>()
+                .HasIndex(t => t.Code)
+                .IsUnique();
         }
     }
 }
