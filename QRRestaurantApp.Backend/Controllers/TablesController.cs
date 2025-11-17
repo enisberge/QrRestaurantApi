@@ -17,11 +17,18 @@ namespace QRRestaurantApp.Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CategoryList()
+        public async Task<IActionResult> TableList()
         {
             var values = await _tableService.GetAllTableAsync();
             return Ok(values);
         }
+        [HttpGet("code/{code}")]
+        public async Task<IActionResult> GetByCode(string code)
+        {
+            var result= await _tableService.GetByCodeAsync(code);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateTable(CreateTableDto createTableDto)
         {

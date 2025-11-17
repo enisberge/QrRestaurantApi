@@ -8,6 +8,7 @@ namespace QRRestaurantApp.Backend.Services.TableServices
     {
 
         Task<ApiResponse<List<ResultTableDto>>> GetAllTableAsync();
+        Task<ApiResponse<ResultTableDto>> GetByCodeAsync(string code);
         Task<ApiResponse<ResultTableDto>> CreateTableAsync(CreateTableDto createTableDto);
         Task<ApiResponse<string>> UpdateTableAsync(UpdateTableDto updateTableDto);
         Task<ApiResponse<string>> DeleteTableAsync(int id);

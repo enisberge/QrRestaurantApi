@@ -62,6 +62,16 @@ namespace QRRestaurantApp.Backend.Services.TableServices
             return ApiResponse<List<ResultTableDto>>.SuccessResponse(result);
         }
 
+        public async Task<ApiResponse<ResultTableDto>> GetByCodeAsync(string code)
+        {
+            var table= await _context.Tables.FirstOrDefaultAsync(c => c.Code == code);
+            if (table == null)
+                return ApiResponse<ResultTableDto>.FailResponse("Masa Bulunamadı veya geçersiz QR kodu.");
+
+            var result=_mapper.Map<ResultTableDto>(table);
+            return ApiResponse<ResultTableDto>.SuccessResponse(result);
+        }
+
         public Task<ApiResponse<string>> UpdateTableAsync(UpdateTableDto updateTableDto)
         {
             throw new NotImplementedException();

@@ -9,7 +9,7 @@
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get; set;}
 
-        public List<TableSession> TableSessions { get; set; } //1 masaya ait birden fazla oturum bilgisi olabilir
+        public List<TableSessionLog> TableSessionLogs { get; set; } //1 masaya ait birden fazla oturum bilgisi olabilir
         public List<Order> Orders { get; set; } //1 masaya ait birden fazla sipariş bilgisi olabilir
     }
 }
