@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QRRestaurantApp.Backend.DTOs.CategoryDtos;
 using QRRestaurantApp.Backend.Services.CategoryServices;
@@ -15,7 +16,7 @@ namespace QRRestaurantApp.Backend.Controllers
         {
             _categoryService = categoryService;
         }
-
+        [Authorize(Roles = "customer")]
         [HttpGet]
         public async Task<IActionResult> CategoryList()
         {

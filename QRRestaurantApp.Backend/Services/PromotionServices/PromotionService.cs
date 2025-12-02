@@ -104,9 +104,7 @@ namespace QRRestaurantApp.Backend.Services.PromotionServices
             try
             {
                 var sql = @"
-                  
-   
-   SELECT 
+     SELECT 
     p.Id,
     p.Name AS ProductName,
 	CASE
@@ -114,10 +112,10 @@ namespace QRRestaurantApp.Backend.Services.PromotionServices
 	ELSE p.Price
 	END AS PromotionPrice, --yalnızca X AL Y öde için toplam fiyatı gösteriyoruz 
 	p.price UnitPrice,
-	p.ImageUrl ProductImage,
+	ISNULL(p.ImageUrl,'') ProductImage,
 	ISNULL(p.IsDishOfTheDay,0) IsDishOfTheDay,
     ISNULL(pr.PromotionType, 0) AS PromotionType,
-    ISNULL(pr.ImageUrl, p.ImageUrl) AS PromotionImage, -- kampanya resmi yoksa ürün resmi
+    ISNULL(pr.ImageUrl,'') AS PromotionImage, -- kampanya resmi yoksa ürün resmi
     ISNULL(pr.Name, '') AS PromotionName,
 	ISNULL(pr.Description, p.Description) AS PromotionDescription,
 	ISNULL(pr.IsActive,0) AS PromotionStatus,

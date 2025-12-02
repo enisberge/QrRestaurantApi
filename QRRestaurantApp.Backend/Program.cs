@@ -10,6 +10,7 @@ using QRRestaurantApp.Backend.Services.JwtServices;
 using QRRestaurantApp.Backend.Services.ProductService;
 using QRRestaurantApp.Backend.Services.PromotionServices;
 using QRRestaurantApp.Backend.Services.TableServices;
+using QRRestaurantApp.Backend.Services.TableSessionsServices;
 using QRRestaurantApp.Backend.Services.UrlServices;
 using System.Text;
 
@@ -62,6 +63,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
 builder.Services.AddScoped<ITableService, TableService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<ITableSessionService, TableSessionService>();
 
 //UrlService kayydı
 builder.Services.AddHttpContextAccessor();

@@ -20,7 +20,7 @@ namespace QRRestaurantApp.Backend.Entities
         public bool HasOrder { get; set; }
 
         //Son aktivite (QR okuttuğu an, sipariş verdiği an, yorum bıraktığı an)
-        public DateTime LastActivty { get; set; }
+        public DateTime LastActivity { get; set; }
 
         // 🔹 Kullanıcı manuel çıkış yaptıysa veya sistem tarafından sonlandırıldıysa açıklama
         public string? EndReason { get; set; }

@@ -73,27 +73,51 @@ namespace QRRestaurantApp.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TableSessions",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TableId = table.Column<int>(type: "int", nullable: false),
-                    DeviceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SessionToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ClosedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TableSessions", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TableSessions_Tables_TableId",
+                        name: "FK_Orders_Tables_TableId",
                         column: x => x.TableId,
                         principalTable: "Tables",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TableSessionLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TableId = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeviceId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SessionStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SessionEnd = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    HasOrder = table.Column<bool>(type: "bit", nullable: false),
+                    LastActivity = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeviceInfo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TableSessionLogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TableSessionLogs_Tables_TableId",
+                        column: x => x.TableId,
+                        principalTable: "Tables",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,33 +147,6 @@ namespace QRRestaurantApp.Backend.Migrations
                         name: "FK_Promotions_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TableId = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TableSessionId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_TableSessions_TableSessionId",
-                        column: x => x.TableSessionId,
-                        principalTable: "TableSessions",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_Tables_TableId",
-                        column: x => x.TableId,
-                        principalTable: "Tables",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -201,11 +198,6 @@ namespace QRRestaurantApp.Backend.Migrations
                 column: "TableId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_TableSessionId",
-                table: "Orders",
-                column: "TableSessionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -222,8 +214,8 @@ namespace QRRestaurantApp.Backend.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TableSessions_TableId",
-                table: "TableSessions",
+                name: "IX_TableSessionLogs_TableId",
+                table: "TableSessionLogs",
                 column: "TableId");
         }
 
@@ -237,19 +229,19 @@ namespace QRRestaurantApp.Backend.Migrations
                 name: "Promotions");
 
             migrationBuilder.DropTable(
+                name: "TableSessionLogs");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "TableSessions");
+                name: "Tables");
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Tables");
         }
     }
 }

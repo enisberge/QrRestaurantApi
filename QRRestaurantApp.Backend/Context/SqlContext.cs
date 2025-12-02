@@ -11,7 +11,7 @@ namespace QRRestaurantApp.Backend.Context
         public DbSet<Product>Products { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
         public DbSet<Table> Tables { get; set; }
-        public DbSet<TableSession> TableSessions { get; set; }
+        public DbSet<TableSessionLog> TableSessionLogs { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 
@@ -55,6 +55,18 @@ namespace QRRestaurantApp.Backend.Context
             modelBuilder.Entity<Table>()
                 .HasIndex(t => t.Code)
                 .IsUnique();
+
+            modelBuilder.Entity<TableSessionLog>()
+                .HasOne(ts => ts.Table)
+                .WithMany(t => t.TableSessionLogs)
+                .HasForeignKey(ts => ts.TableId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OptionGroup>()
+                .HasMany(og => og.OptionValues)
+                .WithOne(ov => ov.OptionGroup)
+                .HasForeignKey(ov => ov.OptionGroudId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

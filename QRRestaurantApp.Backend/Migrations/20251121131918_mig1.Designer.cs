@@ -12,7 +12,7 @@ using QRRestaurantApp.Backend.Context;
 namespace QRRestaurantApp.Backend.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20251105103202_mig1")]
+    [Migration("20251121131918_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -69,17 +69,12 @@ namespace QRRestaurantApp.Backend.Migrations
                     b.Property<int>("TableId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TableSessionId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TableId");
-
-                    b.HasIndex("TableSessionId");
 
                     b.ToTable("Orders");
                 });
@@ -256,7 +251,7 @@ namespace QRRestaurantApp.Backend.Migrations
                     b.ToTable("Tables");
                 });
 
-            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.TableSession", b =>
+            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.TableSessionLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -264,22 +259,31 @@ namespace QRRestaurantApp.Backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ClosedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeviceId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<string>("DeviceInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EndReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasOrder")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SessionToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("LastActivity")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("SessionEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SessionStart")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("TableId")
                         .HasColumnType("int");
@@ -288,7 +292,7 @@ namespace QRRestaurantApp.Backend.Migrations
 
                     b.HasIndex("TableId");
 
-                    b.ToTable("TableSessions");
+                    b.ToTable("TableSessionLogs");
                 });
 
             modelBuilder.Entity("QRRestaurantApp.Backend.Entities.Order", b =>
@@ -298,10 +302,6 @@ namespace QRRestaurantApp.Backend.Migrations
                         .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("QRRestaurantApp.Backend.Entities.TableSession", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("TableSessionId");
 
                     b.Navigation("Table");
                 });
@@ -347,12 +347,12 @@ namespace QRRestaurantApp.Backend.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.TableSession", b =>
+            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.TableSessionLog", b =>
                 {
                     b.HasOne("QRRestaurantApp.Backend.Entities.Table", "Table")
-                        .WithMany("TableSessions")
+                        .WithMany("TableSessionLogs")
                         .HasForeignKey("TableId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Table");
@@ -379,12 +379,7 @@ namespace QRRestaurantApp.Backend.Migrations
                 {
                     b.Navigation("Orders");
 
-                    b.Navigation("TableSessions");
-                });
-
-            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.TableSession", b =>
-                {
-                    b.Navigation("Orders");
+                    b.Navigation("TableSessionLogs");
                 });
 #pragma warning restore 612, 618
         }

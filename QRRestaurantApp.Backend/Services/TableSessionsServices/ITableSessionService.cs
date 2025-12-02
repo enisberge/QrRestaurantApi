@@ -5,6 +5,6 @@ namespace QRRestaurantApp.Backend.Services.TableSessionsServices
 {
     public interface ITableSessionService
     {
-        Task<ApiResponse<ResultTableSessionDto>> CreateTableSessionAsync(CreateTableSessionDto createTableSessionDto);
+        Task<ApiResponse<ResultTableSessionLogDto>> CreateTableSessionLogAsync(CreateTableSessionLogDto createTableSessionDto);
     }
 }
