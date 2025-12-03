@@ -21,7 +21,7 @@ namespace QRRestaurantApp.Backend.Services.OptionServices
         {
             if (createOptionGroupDto == null)
             {
-                return ApiResponse<ResultOptionGroupDto>.FailResponse("Geçersiz ürün verisi gönderildi.");
+                return ApiResponse<ResultOptionGroupDto>.FailResponse("Geçersiz ürün seçenek grubu.");
             }
 
             var optionGroup = _mapper.Map<OptionGroup>(createOptionGroupDto);

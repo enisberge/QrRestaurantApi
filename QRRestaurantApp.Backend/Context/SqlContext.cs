@@ -14,8 +14,10 @@ namespace QRRestaurantApp.Backend.Context
         public DbSet<TableSessionLog> TableSessionLogs { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-
         public DbSet<OptionGroup> OptionGroups { get; set; }
+        public DbSet<OptionValue> OptionValues { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

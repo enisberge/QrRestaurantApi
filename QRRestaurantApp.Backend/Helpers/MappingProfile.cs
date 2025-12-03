@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using QRRestaurantApp.Backend.DTOs.CategoryDtos;
 using QRRestaurantApp.Backend.DTOs.OptionDtos;
+using QRRestaurantApp.Backend.DTOs.OptionValueDtos;
 using QRRestaurantApp.Backend.DTOs.ProductDtos;
 using QRRestaurantApp.Backend.DTOs.PromotionDtos;
 using QRRestaurantApp.Backend.DTOs.TableDtos;
@@ -37,6 +38,10 @@ namespace QRRestaurantApp.Backend.Helpers
             CreateMap<CreateOptionGroupDto,OptionGroup>().ReverseMap();
             CreateMap<ResultOptionGroupDto, OptionGroup>().ReverseMap();
             CreateMap<UpdateOptionGroupDto, OptionGroup>().ReverseMap();
+
+            CreateMap<CreateOptionValueDto, OptionValue>().ReverseMap();
+            CreateMap<ResultOptionValueDto, OptionValue>().ReverseMap();
+            CreateMap<UpdateOptionValueDto, OptionValue>().ReverseMap();
 
         }
     }
