@@ -29,6 +29,26 @@ namespace QRRestaurantApp.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OptionGroups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VariationType = table.Column<int>(type: "int", nullable: false),
+                    IsRequired = table.Column<bool>(type: "bit", nullable: false),
+                    MinSelect = table.Column<int>(type: "int", nullable: false),
+                    MaxSelect = table.Column<int>(type: "int", nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OptionGroups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tables",
                 columns: table => new
                 {
@@ -68,6 +88,28 @@ namespace QRRestaurantApp.Backend.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OptionValue",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PriceDiff = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    OptionGroudId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OptionValue", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OptionValue_OptionGroups_OptionGroudId",
+                        column: x => x.OptionGroudId,
+                        principalTable: "OptionGroups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -183,6 +225,11 @@ namespace QRRestaurantApp.Backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_OptionValue_OptionGroudId",
+                table: "OptionValue",
+                column: "OptionGroudId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
                 table: "OrderItems",
                 column: "OrderId");
@@ -223,6 +270,9 @@ namespace QRRestaurantApp.Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "OptionValue");
+
+            migrationBuilder.DropTable(
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
@@ -230,6 +280,9 @@ namespace QRRestaurantApp.Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "TableSessionLogs");
+
+            migrationBuilder.DropTable(
+                name: "OptionGroups");
 
             migrationBuilder.DropTable(
                 name: "Orders");

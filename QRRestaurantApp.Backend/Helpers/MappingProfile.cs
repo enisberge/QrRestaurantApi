@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using QRRestaurantApp.Backend.DTOs.CategoryDtos;
+using QRRestaurantApp.Backend.DTOs.OptionDtos;
 using QRRestaurantApp.Backend.DTOs.ProductDtos;
 using QRRestaurantApp.Backend.DTOs.PromotionDtos;
 using QRRestaurantApp.Backend.DTOs.TableDtos;
@@ -27,17 +28,15 @@ namespace QRRestaurantApp.Backend.Helpers
             CreateMap<Promotion, UpdatePromotionDto>().ReverseMap();
 
             CreateMap<CreateTableDto, Table>().ReverseMap();
-            CreateMap<UpdateTableDto, Table>().ReverseMap();
             CreateMap<ResultTableDto, Table>().ReverseMap();
+            CreateMap<UpdateTableDto, Table>().ReverseMap();
 
             CreateMap<CreateTableSessionLogDto, TableSessionLog>().ReverseMap();
             CreateMap<ResultTableSessionLogDto, TableSessionLog>().ReverseMap();
 
-
-
-
-
-
+            CreateMap<CreateOptionGroupDto,OptionGroup>().ReverseMap();
+            CreateMap<ResultOptionGroupDto, OptionGroup>().ReverseMap();
+            CreateMap<UpdateOptionGroupDto, OptionGroup>().ReverseMap();
 
         }
     }

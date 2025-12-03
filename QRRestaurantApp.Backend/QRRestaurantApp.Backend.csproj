@@ -34,8 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="DTOs\OptionDtos\" />
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ using QRRestaurantApp.Backend.Context;
 namespace QRRestaurantApp.Backend.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20251121131918_mig1")]
+    [Migration("20251203085257_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -53,6 +53,73 @@ namespace QRRestaurantApp.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.OptionGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxSelect")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinSelect")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VariationType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OptionGroups");
+                });
+
+            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.OptionValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OptionGroudId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("PriceDiff")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OptionGroudId");
+
+                    b.ToTable("OptionValue");
                 });
 
             modelBuilder.Entity("QRRestaurantApp.Backend.Entities.Order", b =>
@@ -295,6 +362,17 @@ namespace QRRestaurantApp.Backend.Migrations
                     b.ToTable("TableSessionLogs");
                 });
 
+            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.OptionValue", b =>
+                {
+                    b.HasOne("QRRestaurantApp.Backend.Entities.OptionGroup", "OptionGroup")
+                        .WithMany("OptionValues")
+                        .HasForeignKey("OptionGroudId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("OptionGroup");
+                });
+
             modelBuilder.Entity("QRRestaurantApp.Backend.Entities.Order", b =>
                 {
                     b.HasOne("QRRestaurantApp.Backend.Entities.Table", "Table")
@@ -361,6 +439,11 @@ namespace QRRestaurantApp.Backend.Migrations
             modelBuilder.Entity("QRRestaurantApp.Backend.Entities.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("QRRestaurantApp.Backend.Entities.OptionGroup", b =>
+                {
+                    b.Navigation("OptionValues");
                 });
 
             modelBuilder.Entity("QRRestaurantApp.Backend.Entities.Order", b =>
