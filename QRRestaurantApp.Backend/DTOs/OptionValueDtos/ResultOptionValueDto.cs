@@ -1,6 +1,4 @@
-﻿using QRRestaurantApp.Backend.Entities;
-
-namespace QRRestaurantApp.Backend.DTOs.OptionValueDtos
+﻿namespace QRRestaurantApp.Backend.DTOs.OptionValueDtos
 {
     public class ResultOptionValueDto
     {

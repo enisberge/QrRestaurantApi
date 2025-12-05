@@ -93,7 +93,7 @@ namespace QRRestaurantApp.Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OptionValue",
+                name: "OptionValues",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -101,13 +101,14 @@ namespace QRRestaurantApp.Backend.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PriceDiff = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     OptionGroudId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OptionValue", x => x.Id);
+                    table.PrimaryKey("PK_OptionValues", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OptionValue_OptionGroups_OptionGroudId",
+                        name: "FK_OptionValues_OptionGroups_OptionGroudId",
                         column: x => x.OptionGroudId,
                         principalTable: "OptionGroups",
                         principalColumn: "Id",
@@ -225,8 +226,8 @@ namespace QRRestaurantApp.Backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OptionValue_OptionGroudId",
-                table: "OptionValue",
+                name: "IX_OptionValues_OptionGroudId",
+                table: "OptionValues",
                 column: "OptionGroudId");
 
             migrationBuilder.CreateIndex(
@@ -270,7 +271,7 @@ namespace QRRestaurantApp.Backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "OptionValue");
+                name: "OptionValues");
 
             migrationBuilder.DropTable(
                 name: "OrderItems");

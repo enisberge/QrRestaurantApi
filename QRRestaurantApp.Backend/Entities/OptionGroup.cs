@@ -14,5 +14,6 @@ namespace QRRestaurantApp.Backend.Entities
         public int DisplayOrder { get; set; }
         public bool IsActive { get; set; }
         public List<OptionValue> OptionValues { get; set; }
+        public List<ProductOptionGroup> ProductOptionGroups { get; set; }
     }
 }

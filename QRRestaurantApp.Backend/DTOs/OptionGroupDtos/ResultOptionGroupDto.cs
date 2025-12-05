@@ -1,6 +1,6 @@
 ﻿using QRRestaurantApp.Backend.Enums;
 
-namespace QRRestaurantApp.Backend.DTOs.OptionDtos
+namespace QRRestaurantApp.Backend.DTOs.OptionGroupDtos
 {
     public class ResultOptionGroupDto
     {

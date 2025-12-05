@@ -102,6 +102,9 @@ namespace QRRestaurantApp.Backend.Migrations
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -116,7 +119,7 @@ namespace QRRestaurantApp.Backend.Migrations
 
                     b.HasIndex("OptionGroudId");
 
-                    b.ToTable("OptionValue");
+                    b.ToTable("OptionValues");
                 });
 
             modelBuilder.Entity("QRRestaurantApp.Backend.Entities.Order", b =>

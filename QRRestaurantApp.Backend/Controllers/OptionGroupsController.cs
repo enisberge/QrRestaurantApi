@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using QRRestaurantApp.Backend.DTOs.OptionDtos;
+﻿using Microsoft.AspNetCore.Mvc;
+using QRRestaurantApp.Backend.DTOs.OptionGroupDtos;
 using QRRestaurantApp.Backend.Services.OptionServices;
 
 namespace QRRestaurantApp.Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductOptionsController : ControllerBase
+    public class OptionGroupsController : ControllerBase
     {
         private readonly IOptionGroupService _optionGroupService;
-        public ProductOptionsController(IOptionGroupService optionGroupService)
+        public OptionGroupsController(IOptionGroupService optionGroupService)
         {
             _optionGroupService = optionGroupService;
         }

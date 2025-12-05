@@ -16,5 +16,6 @@
         public List<Promotion> Promotions { get; set; }
 
         public List<OrderItem> OrderItems { get; set; }
+        public List<ProductOptionGroup> ProductOptionGroups { get; set; }
     }
 }

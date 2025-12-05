@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QRRestaurantApp.Backend.Context;
-using QRRestaurantApp.Backend.DTOs.OptionDtos;
+using QRRestaurantApp.Backend.DTOs.OptionGroupDtos;
 using QRRestaurantApp.Backend.Entities;
 using QRRestaurantApp.Backend.Helpers;
 

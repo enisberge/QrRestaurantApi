@@ -1,5 +1,4 @@
-﻿using QRRestaurantApp.Backend.DTOs.OptionDtos;
-using QRRestaurantApp.Backend.DTOs.ProductDtos;
+﻿using QRRestaurantApp.Backend.DTOs.OptionGroupDtos;
 using QRRestaurantApp.Backend.Helpers;
 
 namespace QRRestaurantApp.Backend.Services.OptionServices

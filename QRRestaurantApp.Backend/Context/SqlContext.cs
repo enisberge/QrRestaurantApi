@@ -16,7 +16,7 @@ namespace QRRestaurantApp.Backend.Context
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<OptionGroup> OptionGroups { get; set; }
         public DbSet<OptionValue> OptionValues { get; set; }
-
+        public DbSet<ProductOptionGroup> ProductOptionGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +68,18 @@ namespace QRRestaurantApp.Backend.Context
                 .HasMany(og => og.OptionValues)
                 .WithOne(ov => ov.OptionGroup)
                 .HasForeignKey(ov => ov.OptionGroudId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductOptionGroup>()
+                .HasOne(pog => pog.Product)
+                .WithMany(p => p.ProductOptionGroups)
+                .HasForeignKey(pog => pog.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductOptionGroup>()
+                .HasOne(pog => pog.OptionGroup)
+                .WithMany(og => og.ProductOptionGroups)
+                .HasForeignKey(pog => pog.OptionGroupId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
